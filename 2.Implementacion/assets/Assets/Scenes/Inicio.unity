@@ -2346,7 +2346,11 @@ MonoBehaviour:
     Mejora tus tecnologias, investiga nuevos avances y desbloquea poderosas habilidades
     para fortalecer tu civilizacion y alcanzar nuevas alturas en tu busqueda por
     dominar el espacio.\r\n\r\n\xA1Preparate para una experiencia de juego inmersiva
-    y emocionante mientras te aventuras en esta emocionante odisea intergalactica!\r\n"
+    y emocionante mientras te aventuras en esta emocionante odisea intergalactica!\r\n\nControles:\nSelecciona
+    naves o planetas utilizando el clic izquierdo del rat\xF3n. Tambien podr\xE1s
+    seleccionar todas las unidades en un area arrastrando mientras se pulsa el clic
+    izquierdo.\n\nMueve las naves seleccionadas con clic derecho sobre cualquier
+    superficie."
 --- !u!1 &1069381853 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: a93c012dd9ef6454fa7d140e976926f7,

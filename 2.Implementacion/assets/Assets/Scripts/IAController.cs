@@ -1,33 +1,38 @@
+using System.Linq;
+using UnitScripts;
 using UnitScripts.PlanetScripts;
 using UnitScripts.ShipScripts;
 using UnityEngine;
 
-public class IAController : MonoBehaviour
+/// <summary>
+/// Controla el comportamiento de la IA
+/// Solo puede controlar las naves iniciales para atacar algun planeta aleatorio (que no sea de la IA) y defender sus planetas
+/// </summary>
+public class IaController : MonoBehaviour
 {
     private float _lastInteraction;
-    private float _interactionInterval = 180f;
+    private const float InteractionInterval = 180f;
 
     private void Update()
     {
-        if (Time.time - _lastInteraction <= _interactionInterval) return;
+        if (Time.time - _lastInteraction <= InteractionInterval) return;
 
         _lastInteraction = Time.time;
         var planets = GameManager.Instance.PlayerPlanets;
 
-        foreach (var planet in planets)
+        var targetPlanet = planets.First(unit => unit.Owner != PlayerType.IA);
+
+        if (!targetPlanet) return;
+        
+        var iaShips = GameManager.Instance.IaShips;
+        foreach (var ship in iaShips)
         {
-            if (planet.Owner != PlayerType.IA) continue;
-
-            var iaShips = GameManager.Instance.IaShips;
-
-            foreach (var ship in iaShips)
-            {
-                ship.gameObject.GetComponent<ShipOrderController>().SetDestination(planet.transform.position);
-            }
+            ship.gameObject.TryGetComponent<ShipOrderController>(out var shipOrderController);
+            shipOrderController.SetDestination(targetPlanet.transform.position);
         }
     }
 
-    public void PlanetHit(PlanetUnit planetUnit)
+    public static void PlanetHit(PlanetUnit planetUnit)
     {
         var iaShips = GameManager.Instance.IaShips;
 
@@ -37,7 +42,7 @@ public class IAController : MonoBehaviour
         }
     }
 
-    public void ShipHit(ShipUnit shipUnit)
+    public static void ShipHit(ShipUnit shipUnit)
     {
         var ships = GameManager.Instance.IaShips;
         var closestShips = new ShipUnit[Mathf.Min(ships.Count - 1, 3)];
@@ -49,7 +54,7 @@ public class IAController : MonoBehaviour
 
         foreach (var ship in ships)
         {
-            if (ship == shipUnit.gameObject) continue;
+            if (ship.gameObject == shipUnit.gameObject) continue;
 
             var distance = Vector3.Distance(shipUnit.transform.position, ship.transform.position);
             for (var i = 0; i < 3; i++)
@@ -60,6 +65,7 @@ public class IAController : MonoBehaviour
                     closestDistances[j] = closestDistances[j - 1];
                     closestShips[j] = closestShips[j - 1];
                 }
+
                 closestDistances[i] = distance;
                 closestShips[i] = ship;
                 break;

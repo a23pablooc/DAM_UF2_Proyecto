@@ -1,11 +1,15 @@
 using System;
 using System.Linq;
 using TMPro;
+using UnitScripts;
 using UnitScripts.ShipScripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Gestiona la interfaz de usuario
+/// </summary>
 public class UIControl : MonoBehaviour
 {
     public event Action<bool> OnFullScreenToggleValueChanged;

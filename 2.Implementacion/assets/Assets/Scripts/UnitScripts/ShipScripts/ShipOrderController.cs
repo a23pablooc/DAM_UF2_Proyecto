@@ -3,6 +3,9 @@ using UnityEngine.AI;
 
 namespace UnitScripts.ShipScripts
 {
+    /// <summary>
+    /// Gestión de ordenes de desplazamiento de la nave
+    /// </summary>
     public class ShipOrderController : MonoBehaviour
     {
         private NavMeshAgent _agent;

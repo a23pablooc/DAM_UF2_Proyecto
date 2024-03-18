@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using UnitScripts;
 using UnitScripts.PlanetScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace SolarSystem
 {
+    /// <summary>
+    /// Genera el sistema solar
+    /// </summary>
     public class SolarSystemGanerator : MonoBehaviour
     {
         [SerializeField] private GameObject starPrefab;

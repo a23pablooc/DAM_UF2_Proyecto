@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Clase para la interfaz gráfica de un slot
+    /// Gestiona la interacción con el slot
+    /// </summary>
     public class SlotGUI : MonoBehaviour
     {
         [SerializeField] private GameObject shipsPanel;
@@ -20,6 +24,10 @@ namespace UnitScripts.PlanetScripts
             _slot = slot;
         }
 
+        /// <summary>
+        /// Si el slot es de población, muestra el panel de naves
+        /// Si el slot no tiene nada, muestra el panel de compra de slots
+        /// </summary>
         public void SlotClicked()
         {
             if (_slot && _slot.SlotFarm.SlotType != SlotType.PopulationFarm) return;

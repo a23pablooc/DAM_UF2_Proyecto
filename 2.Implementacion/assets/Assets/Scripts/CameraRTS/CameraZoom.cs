@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace CameraRTS
 {
+    /// <summary>
+    /// Controla el zoom de la cámara.
+    /// </summary>
     public class CameraZoom : MonoBehaviour
     {
         [SerializeField] private float speed = 500f;

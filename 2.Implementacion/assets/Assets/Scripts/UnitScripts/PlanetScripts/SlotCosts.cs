@@ -2,9 +2,12 @@ using System.Collections.Generic;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Costes de construcción de los slots
+    /// </summary>
     public static class SlotCosts
     {
-        private static readonly Dictionary<SlotType, Dictionary<ResourceType, int>> Costs = new()
+        private static readonly Dictionary<SlotType, IReadOnlyDictionary<ResourceType, int>> Costs = new()
         {
             {
                 SlotType.CreditFarm, new Dictionary<ResourceType, int>
@@ -40,7 +43,7 @@ namespace UnitScripts.PlanetScripts
             }
         };
 
-        public static Dictionary<ResourceType, int> GetCosts(SlotType resourceType)
+        public static IReadOnlyDictionary<ResourceType, int> GetCosts(SlotType resourceType)
         {
             return Costs[resourceType];
         }

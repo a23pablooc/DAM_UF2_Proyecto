@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Rotación de un planeta
+    /// </summary>
     public class PlanetMovement : MonoBehaviour
     {
         [SerializeField] private float minRotationSpeed = 5f;

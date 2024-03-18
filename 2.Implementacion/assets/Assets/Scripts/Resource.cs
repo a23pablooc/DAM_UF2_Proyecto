@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Clase Recurso, almacena el tipo de recurso, la cantidad y la cantidad máxima
+/// </summary>
 public class Resource
 {
     public ResourceType ResourceType { get; private set; }

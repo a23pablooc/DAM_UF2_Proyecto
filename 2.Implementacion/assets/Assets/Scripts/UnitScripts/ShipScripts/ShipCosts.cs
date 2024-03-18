@@ -2,9 +2,12 @@ using System.Collections.Generic;
 
 namespace UnitScripts.ShipScripts
 {
+    /// <summary>
+    /// Costes de construcción de las naves
+    /// </summary>
     public static class ShipCosts
     {
-        private static readonly Dictionary<ShipType, Dictionary<ResourceType, int>> Costs = new()
+        private static readonly Dictionary<ShipType, IReadOnlyDictionary<ResourceType, int>> Costs = new()
         {
             {
                 ShipType.FastShip, new Dictionary<ResourceType, int>
@@ -35,7 +38,7 @@ namespace UnitScripts.ShipScripts
             }
         };
 
-        public static Dictionary<ResourceType, int> GetCosts(ShipType shipType)
+        public static IReadOnlyDictionary<ResourceType, int> GetCosts(ShipType shipType)
         {
             return Costs[shipType];
         }

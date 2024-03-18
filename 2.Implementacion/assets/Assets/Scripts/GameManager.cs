@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using UnitScripts;
 using UnitScripts.PlanetScripts;
 using UnitScripts.ShipScripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Clase GameManager. Controla el flujo del juego.
+/// Contiene la lógica del juego y los datos de los jugadores.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject fastShipPrefab;

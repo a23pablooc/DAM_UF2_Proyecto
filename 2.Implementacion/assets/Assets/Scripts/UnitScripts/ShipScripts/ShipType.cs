@@ -1,5 +1,8 @@
 namespace UnitScripts.ShipScripts
 {
+    /// <summary>
+    /// Tipos de nave
+    /// </summary>
     public enum ShipType
     {
         FastShip,

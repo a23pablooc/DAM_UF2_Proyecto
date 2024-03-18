@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+/// <summary>
+/// Gestiona la configuración del juego
+/// Implementa el patrón observer
+/// </summary>
 public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private UIControl uiControl;

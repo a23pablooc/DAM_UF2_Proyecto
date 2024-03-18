@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace UnitScripts
 {
+    /// <summary>
+    /// Controlador generico de la vida de una unidad.
+    /// </summary>
     public abstract class HealthController : MonoBehaviour
     {
         [SerializeField] private Transform healthBarTransform;
@@ -50,8 +53,15 @@ namespace UnitScripts
             OnHitEvent();
         }
         
+        /// <summary>
+        /// Accion que se ejecuta cuando la unidad muere.
+        /// </summary>
+        /// <param name="source"></param>
         protected abstract void DestroyAction(PlayerType source);
 
+        /// <summary>
+        /// Accion que se ejecuta cuando la unidad recibe daño.
+        /// </summary>
         protected abstract void OnHitEvent();
 
         protected void UpdateHealthBar()

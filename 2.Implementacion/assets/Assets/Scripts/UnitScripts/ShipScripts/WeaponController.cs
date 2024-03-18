@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace UnitScripts.ShipScripts
 {
+    /// <summary>
+    /// Controlador del arma. Se encarga de detectar los objetivos y disparar.
+    /// </summary>
     public class WeaponController : MonoBehaviour
     {
         [SerializeField] private Unit unit;
@@ -43,16 +46,22 @@ namespace UnitScripts.ShipScripts
             GameManager.Instance.OnShipDestroyed -= OnShipDestroyed;
         }
 
+        /// <summary>
+        /// Al entrar en el rango de un objetivo, se añade a la lista de objetivos.
+        /// </summary>
         private void OnTriggerEnter(Collider other)
         {
             if (!IsTargetShooteable(other)) return;
 
-            if (other.gameObject.TryGetComponent<PlanetUnit>(out _))
+            if (other.gameObject.TryGetComponent<PlanetUnit>(out _) && !_planetTargets.Contains(other))
                 _planetTargets.Add(other);
-            else if (other.gameObject.TryGetComponent<ShipUnit>(out _))
+            else if (other.gameObject.TryGetComponent<ShipUnit>(out _) && !_shipsTargets.Contains(other))
                 _shipsTargets.Add(other);
         }
 
+        /// <summary>
+        /// Mientras esté en rango de un objetivo, se dispara.
+        /// </summary>
         private void OnTriggerStay(Collider other)
         {
             if (!HasTargets(out var target)) return;
@@ -65,6 +74,9 @@ namespace UnitScripts.ShipScripts
             ShootBullet();
         }
 
+        /// <summary>
+        /// Al salir del rango de un objetivo, se elimina de la lista de objetivos.
+        /// </summary>
         private void OnTriggerExit(Collider other)
         {
             if (!IsTargetShooteable(other)) return;
@@ -75,6 +87,10 @@ namespace UnitScripts.ShipScripts
                 _shipsTargets.Add(other);
         }
 
+        /// <summary>
+        /// Dispara una bala.
+        /// </summary>
+        /// <exception cref="Exception">Escepcion que se lanza si el que dispara la bala no es un jugador válido</exception>
         private void ShootBullet()
         {
             var bullet = Instantiate(bulletPrefab, weaponTransform.position, weaponTransform.rotation);
@@ -95,6 +111,9 @@ namespace UnitScripts.ShipScripts
             bulletController.Init(unit.gameObject, damage, bulletLifeTime, bulletSpeed);
         }
 
+        /// <summary>
+        /// Se cambia la capa de la bala y de sus hijos para que no colisione con el dueño y aliados
+        /// </summary>
         private static void ChangeLayer(GameObject bullet, string layer)
         {
             bullet.layer = LayerMask.NameToLayer(layer);
@@ -104,6 +123,9 @@ namespace UnitScripts.ShipScripts
             }
         }
 
+        /// <summary>
+        /// Comprueba si el objetivo es válido para ser disparado.
+        /// </summary>
         private bool IsTargetShooteable(Collider other)
         {
             var isShooteable = other.TryGetComponent<IShooteable>(out _);
@@ -114,6 +136,11 @@ namespace UnitScripts.ShipScripts
             return otherUnit.Owner != unit.Owner;
         }
 
+        /// <summary>
+        /// Comprueba si hay objetivos a los que disparar.
+        /// </summary>
+        /// <param name="target">Referencia al objetivo a disparar, null si no hay objetivos</param>
+        /// <returns>Devuelve true si hay objetivos, false en caso contrario</returns>
         private bool HasTargets(out Collider target)
         {
             if (_shipsTargets.Count > 0)
@@ -132,11 +159,19 @@ namespace UnitScripts.ShipScripts
             return false;
         }
 
+        /// <summary>
+        /// Al destruir un planeta, se elimina de la lista de objetivos.
+        /// </summary>
+        /// <param name="planet">Planeta destruido</param>
         private void OnPlanetDestroyed(PlanetUnit planet)
         {
             _planetTargets.Remove(planet.GetComponent<Collider>());
         }
 
+        /// <summary>
+        /// Al destruir una nave, se elimina de la lista de objetivos.
+        /// </summary>
+        /// <param name="ship">Nave destruida</param>
         private void OnShipDestroyed(ShipUnit ship)
         {
             _shipsTargets.Remove(ship.GetComponent<Collider>());

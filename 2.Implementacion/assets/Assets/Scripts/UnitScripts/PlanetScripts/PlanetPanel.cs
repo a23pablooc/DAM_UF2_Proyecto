@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Controlador del panel de slots de los planetas
+    /// Se encarga de mostrar los slots de un planeta y de comprar naves y slots
+    /// </summary>
     public class PlanetPanel : MonoBehaviour
     {
         [SerializeField] private GameObject emptySlotPrefab;
@@ -15,6 +19,9 @@ namespace UnitScripts.PlanetScripts
 
         [SerializeField] private SlotGUI[] slots;
 
+        /// <summary>
+        /// Campos de texto de los costos de los distintos tipos de naves
+        /// </summary>
         [Header("FastShip Cost Texts")] [SerializeField]
         private TextMeshProUGUI[] resourceTexts = new TextMeshProUGUI[4];
 
@@ -24,7 +31,9 @@ namespace UnitScripts.PlanetScripts
         [Header("BomberShip Cost Texts")] [SerializeField]
         private TextMeshProUGUI[] resourceTexts3 = new TextMeshProUGUI[4];
 
-
+        /// <summary>
+        /// Campos de texto de los costos de los distintos tipos de granjas/fábricas/
+        /// </summary>
         [Header("CreditsFarm Cost Texts")] [SerializeField]
         private TextMeshProUGUI[] resourceTexts4 = new TextMeshProUGUI[3];
 
@@ -42,6 +51,10 @@ namespace UnitScripts.PlanetScripts
 
         private PlanetUnit _planetUnit;
 
+        /// <summary>
+        /// Carga el panel con los slots del planeta y los costos de las naves y granjas
+        /// </summary>
+        /// <param name="planetUnit">Unidad de planeta de la que se muestran los slots</param>
         public void Load(PlanetUnit planetUnit)
         {
             _planetUnit = planetUnit;
@@ -51,13 +64,7 @@ namespace UnitScripts.PlanetScripts
             TextMeshProUGUI[][] texts = { resourceTexts, resourceTexts2, resourceTexts3 };
             for (var i = 0; i < texts.Length; i++)
             {
-                var costs = ShipCosts.GetCosts(i switch
-                {
-                    0 => ShipType.FastShip,
-                    1 => ShipType.NormalShip,
-                    2 => ShipType.BomberShip,
-                    _ => throw new ArgumentOutOfRangeException()
-                });
+                var costs = ShipCosts.GetCosts(ShipTypeExtension.GetShipType(i));
                 texts[i][0].text = costs[ResourceType.Credits].ToString();
                 texts[i][1].text = costs[ResourceType.Metal].ToString();
                 texts[i][2].text = costs[ResourceType.Energy].ToString();
@@ -67,27 +74,25 @@ namespace UnitScripts.PlanetScripts
             TextMeshProUGUI[][] texts2 = { resourceTexts4, resourceTexts5, resourceTexts6, resourceTexts7 };
             for (var i = 0; i < texts2.Length; i++)
             {
-                var costs = SlotCosts.GetCosts(i switch
-                {
-                    0 => SlotType.CreditFarm,
-                    1 => SlotType.MetalFarm,
-                    2 => SlotType.EnergyFarm,
-                    3 => SlotType.PopulationFarm,
-                    _ => throw new ArgumentOutOfRangeException()
-                });
+                var costs = SlotCosts.GetCosts(SlotTypeExtension.GetSlotType(i));
                 texts2[i][0].text = costs[ResourceType.Credits].ToString();
                 texts2[i][1].text = costs[ResourceType.Metal].ToString();
                 texts2[i][2].text = costs[ResourceType.Energy].ToString();
             }
         }
 
+        /// <summary>
+        /// Compra una nave, si no se puede comprar y se lanza una excepción se captura y se muestra un mensaje de error en consola
+        /// </summary>
+        /// <param name="shipTypeIdx">Tipo de nave a comprar</param>
+        /// <see cref="SlotType"/>
+        /// <seealso cref="SlotTypeExtension"/>
         public void BuyShip(int shipTypeIdx)
         {
             try
             {
                 var shipType = ShipTypeExtension.GetShipType(shipTypeIdx);
-                GameManager.Instance.SpawnShip(shipType,
-                    _planetUnit.transform.position + Vector3.right * 50,
+                GameManager.Instance.SpawnShip(shipType, _planetUnit.transform.position + Vector3.right * 50,
                     _planetUnit.Owner);
             }
             catch (Exception e)
@@ -96,6 +101,12 @@ namespace UnitScripts.PlanetScripts
             }
         }
 
+        /// <summary>
+        /// Compra un slot, si no se puede comprar y se lanza una excepción se captura y se muestra un mensaje de error en consola
+        /// </summary>
+        /// <param name="slotTypeIdx">Tipo de slot a comprar</param>
+        /// <see cref="SlotType"/>
+        /// <seealso cref="SlotTypeExtension"/>
         public void BuySlot(int slotTypeIdx)
         {
             try
@@ -111,6 +122,9 @@ namespace UnitScripts.PlanetScripts
             }
         }
 
+        /// <summary>
+        /// Recarga los slots del planeta para mostrar el que se acaba de comprar
+        /// </summary>
         private void ReloadSlots()
         {
             for (var i = 0; i < _planetUnit.Slots.Length; i++)
@@ -137,11 +151,14 @@ namespace UnitScripts.PlanetScripts
             }
         }
 
+        /// <summary>
+        /// Al cerrar el panel se descargan los slots
+        /// </summary>
         private void OnDisable()
         {
-            foreach (var slot in slots)
+            foreach (var slotGUI in slots)
             {
-                slot.Unload();
+                slotGUI.Unload();
             }
 
             shipsPanel.SetActive(false);

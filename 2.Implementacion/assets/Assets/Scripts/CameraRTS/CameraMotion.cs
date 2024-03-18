@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace CameraRTS
 {
+    /// <summary>
+    /// Controla el movimiento de la cámara.
+    /// </summary>
     public class CameraMotion : MonoBehaviour
     {
         [SerializeField] private float baseSpeed = 1f;
@@ -34,7 +37,7 @@ namespace CameraRTS
             var forward = t.forward * y;
 
             _input = (right + forward).normalized;
-            
+
             _speed = Input.GetKey(KeyCode.LeftShift) ? fastSpeed : baseSpeed;
         }
 

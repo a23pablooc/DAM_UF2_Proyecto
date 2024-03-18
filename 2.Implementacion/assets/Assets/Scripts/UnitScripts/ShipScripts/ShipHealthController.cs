@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UnitScripts.ShipScripts
 {
+    /// <summary>
+    /// Controlador de la salud de una nave
+    /// </summary>
     public class ShipHealthController : HealthController
     {
         [SerializeField] private AudioSource audioSource;
@@ -16,9 +19,9 @@ namespace UnitScripts.ShipScripts
         {
             if (unit.Owner != PlayerType.IA) return;
 
-            if (GameObject.FindGameObjectWithTag("IAController").TryGetComponent<IAController>(out var iaController))
+            if (GameObject.FindGameObjectWithTag("IAController").TryGetComponent<IaController>(out _))
             {
-                iaController.ShipHit((ShipUnit) unit);
+                IaController.ShipHit((ShipUnit) unit);
             }
         }
     }

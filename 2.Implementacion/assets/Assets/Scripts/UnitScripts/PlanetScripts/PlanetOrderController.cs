@@ -1,8 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Controlador de la orden de un planeta
+    /// </summary>
     public class PlanetOrderController : MonoBehaviour
     {
         [SerializeField] private PlanetUnit planetUnit;

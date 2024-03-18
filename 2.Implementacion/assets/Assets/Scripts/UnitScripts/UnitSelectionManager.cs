@@ -6,6 +6,9 @@ using UnityEngine.AI;
 
 namespace UnitScripts
 {
+    /// <summary>
+    /// Gestiona la selección de unidades y planetas.
+    /// </summary>
     public class UnitSelectionManager : MonoBehaviour
     {
         public static UnitSelectionManager Instance { get; private set; }

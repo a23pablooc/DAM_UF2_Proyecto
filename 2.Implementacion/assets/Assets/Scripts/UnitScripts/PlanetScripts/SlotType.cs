@@ -1,5 +1,8 @@
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Tipos de slots
+    /// </summary>
     public enum SlotType
     {
         CreditFarm,
@@ -31,6 +34,18 @@ namespace UnitScripts.PlanetScripts
                 SlotType.MetalFarm => ResourceType.Metal,
                 SlotType.EnergyFarm => ResourceType.Energy,
                 SlotType.PopulationFarm => ResourceType.Population,
+                _ => throw new System.ArgumentOutOfRangeException()
+            };
+        }
+        
+        public static SlotType GetSlotType(ResourceType resourceType)
+        {
+            return resourceType switch
+            {
+                ResourceType.Credits => SlotType.CreditFarm,
+                ResourceType.Metal => SlotType.MetalFarm,
+                ResourceType.Energy => SlotType.EnergyFarm,
+                ResourceType.Population => SlotType.PopulationFarm,
                 _ => throw new System.ArgumentOutOfRangeException()
             };
         }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UnitScripts
 {
+    /// <summary>
+    /// Controla la selección de unidades en area mediante un rectángulo.
+    /// </summary>
     public class UnitSelectionBox : MonoBehaviour
     {
         private Camera _camera;

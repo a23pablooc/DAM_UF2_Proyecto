@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UnitScripts
 {
+    /// <summary>
+    /// Clase genérica para todas las unidades del juego.
+    /// </summary>
     public abstract class Unit : MonoBehaviour, IShooteable
     {
         public int CreditReward { get; private set; }

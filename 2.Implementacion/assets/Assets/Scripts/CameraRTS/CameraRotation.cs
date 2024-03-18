@@ -3,12 +3,14 @@ using Cursor = UnityEngine.Cursor;
 
 namespace CameraRTS
 {
+    /// <summary>
+    /// Controla la rotación de la cámara.
+    /// </summary>
     public class CameraRotation : MonoBehaviour
     {
         [SerializeField] private float speed = 4f;
         [SerializeField] private float smoothing = 10f;
 
-        private Vector3 _mousePosition;
 
         private float _targetAngle;
         private float _currentAngle;
@@ -29,7 +31,6 @@ namespace CameraRTS
         {
             if (Input.GetMouseButtonDown(2))
             {
-                _mousePosition = Input.mousePosition;
                 Cursor.lockState = CursorLockMode.Locked;
             }
 
@@ -41,8 +42,6 @@ namespace CameraRTS
             if (Input.GetMouseButtonUp(2))
             {
                 Cursor.lockState = CursorLockMode.None;
-                //move the mouse to the position it was before the middle mouse button was pressed
-                // Cursor.position = _mousePosition;
             }
         }
 

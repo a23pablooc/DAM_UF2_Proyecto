@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Clase que representa un slot de un planeta
+    /// Cada slot produce recursos de un tipo para un jugador
+    /// </summary>
     public class Slot : MonoBehaviour
     {
         private PlayerType _owner;

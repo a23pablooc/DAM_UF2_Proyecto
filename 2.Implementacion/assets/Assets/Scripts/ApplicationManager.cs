@@ -2,6 +2,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Controla el flujo de la aplicación.
+/// Implementa el patrón observer para manejar los eventos de los botones.
+/// </summary>
 public class ApplicationManager : MonoBehaviour
 {
     [SerializeField] private UIControl uiControl;

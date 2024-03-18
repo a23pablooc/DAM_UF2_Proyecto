@@ -2,12 +2,15 @@ using System;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Clase que contiene la información de la producción de un slot
+    /// </summary>
     public class SlotFarm
     {
         private const float CreditProductionRate = 15;
         private const float MetalProductionRate = 15;
         private const float EnergyProductionRate = 15;
-            
+
         private const int CreditProductionAmount = 10;
         private const int MetalProductionAmount = 10;
         private const int EnergyProductionAmount = 10;
@@ -22,7 +25,7 @@ namespace UnitScripts.PlanetScripts
             ProductionRate = productionRate;
             ProductionAmount = productionAmount;
         }
-            
+
         public static SlotFarm Create(SlotType type)
         {
             return type switch

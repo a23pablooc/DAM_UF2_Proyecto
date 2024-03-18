@@ -2,11 +2,14 @@ using UnityEngine;
 
 namespace UnitScripts.PlanetScripts
 {
+    /// <summary>
+    /// Controllador de la salud de un planeta
+    /// </summary>
     public class PlanetHealthController : HealthController
     {
         protected override void DestroyAction(PlayerType source)
         {
-            GameManager.Instance.PlanetDestroyed(base.unit.gameObject, source);
+            GameManager.Instance.PlanetDestroyed(unit.gameObject, source);
             ResetHealth();
         }
 
@@ -14,9 +17,9 @@ namespace UnitScripts.PlanetScripts
         {
             if (unit.Owner != PlayerType.IA) return;
 
-            if (GameObject.FindGameObjectWithTag("IAController").TryGetComponent<IAController>(out var iaController))
+            if (GameObject.FindGameObjectWithTag("IAController").TryGetComponent<IaController>(out _))
             {
-                iaController.PlanetHit((PlanetUnit) unit);
+                IaController.PlanetHit((PlanetUnit) unit);
             }
         }
 
