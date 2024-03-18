@@ -2,9 +2,9 @@
 
 ## PRESENTACIÓN/RESUMEN
 
-- Título. 
+- Título.
 - Concepto: descripción breve (un párrafo) de las ideas principales del juego
-- Género (puede ser más de uno)
+- Género: RTS (Real Time Strategy)
 - Público (target audience)
 - Plataforma (PC, smartphone, tablet,...)
 
