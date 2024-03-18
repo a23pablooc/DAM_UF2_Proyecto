@@ -35,10 +35,12 @@ namespace UnitScripts.PlanetScripts
             if (!_slot)
             {
                 slotPanel.SetActive(true);
+                shipsPanel.SetActive(false);
             }
             else if (_slot.SlotFarm.SlotType == SlotType.PopulationFarm)
             {
                 shipsPanel.SetActive(true);
+                slotPanel.SetActive(false);
             }
         }
 

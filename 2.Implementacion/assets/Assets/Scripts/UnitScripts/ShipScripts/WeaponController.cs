@@ -79,12 +79,8 @@ namespace UnitScripts.ShipScripts
         /// </summary>
         private void OnTriggerExit(Collider other)
         {
-            if (!IsTargetShooteable(other)) return;
-
-            if (other.gameObject.TryGetComponent<PlanetUnit>(out _) && !_planetTargets.Contains(other))
-                _planetTargets.Add(other);
-            else if (other.gameObject.TryGetComponent<ShipUnit>(out _) && !_shipsTargets.Contains(other))
-                _shipsTargets.Add(other);
+            _planetTargets.Remove(other);
+            _shipsTargets.Remove(other);
         }
 
         /// <summary>

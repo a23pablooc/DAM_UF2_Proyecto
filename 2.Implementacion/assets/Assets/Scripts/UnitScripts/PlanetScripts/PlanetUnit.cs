@@ -18,6 +18,11 @@ namespace UnitScripts.PlanetScripts
 
         private const int MaxSlots = 5;
         public Slot[] Slots { get; private set; }
+        
+        [SerializeField] private GameObject colorCircle;
+        [SerializeField] private Material neutralMaterial;
+        [SerializeField] private Material playerMaterial;
+        [SerializeField] private Material iaMaterial;
 
         /// <summary>
         /// Inicializa la unidad de planeta, registra el planeta en el GameManager, establece la capa del planeta y resetea los slots
@@ -29,6 +34,14 @@ namespace UnitScripts.PlanetScripts
             base.Init(owner, creditReward);
             GameManager.Instance.RegisterPlanet(this);
 
+            colorCircle.GetComponent<MeshRenderer>().material = owner switch
+            {
+                PlayerType.Neutral => neutralMaterial,
+                PlayerType.Player => playerMaterial,
+                PlayerType.IA => iaMaterial,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            
             var layer = owner switch
             {
                 PlayerType.Neutral => neutralPlanetsLayer,
@@ -51,7 +64,7 @@ namespace UnitScripts.PlanetScripts
         }
 
         /// <summary>
-        /// Añade un slot al planeta
+        /// Añade un slot al planeta en el primer espacio disponible
         /// </summary>
         /// <param name="slotFarm">Tipo de slot</param>
         /// <exception cref="Exception">Se lanza si no quedan espacios para slots disponibles</exception>
@@ -59,7 +72,7 @@ namespace UnitScripts.PlanetScripts
         {
             for (var i = 0; i < Slots.Length; i++)
             {
-                if (!Slots[i]) continue;
+                if (Slots[i]) continue;
 
                 Slots[i] = gameObject.AddComponent<Slot>();
                 Slots[i].Init(Owner, slotFarm);
